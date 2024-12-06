@@ -1,1 +1,1 @@
-thêm hình ảnh vào đây
+folder image này để lưu hình ảnh
