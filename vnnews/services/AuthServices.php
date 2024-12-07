@@ -1,0 +1,29 @@
+<?php
+    //require_once 'models/User.php';
+    class AuthService{
+        
+        public function validateLogin($username, $password){
+            try
+            {
+                $conn = new PDO("mysql:host=localhost;dbname=tintuc", 'root','12345' );
+                
+                $query = "SELECT PASSWORD, role FROM users WHERE username = :username";
+                $stmt = $conn->prepare($query);
+                $stmt->bindParam(":username", $username) ;
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                //die("role = " .$result[0]["PASSWORD"].$result[0]["role"]);
+                if($password == $result[0]["PASSWORD"]){
+                    return $result[0]["role"];
+                }
+                else{
+                    return false;
+                }
+            }
+            catch(PDOException $e)
+            {
+                return false;
+            }
+    }
+}
+?>
