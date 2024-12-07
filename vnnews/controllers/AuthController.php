@@ -40,7 +40,15 @@ class AuthController {
         exit;
     }
 
-    public function register() {
+    public function register($username, $password) {
+        //session_start();
+        $register = $this->authService->validateRegister($username, $password);
+
+        if($register === true){
+            //$_SESSION["user"] = false;
+            header("Location: ../views/login.php");
+            exit;
+        }
         // Implement register logic
     }
 }

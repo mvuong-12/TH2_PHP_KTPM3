@@ -13,17 +13,34 @@
                 $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 //die("role = " .$result[0]["PASSWORD"].$result[0]["role"]);
-                if($password == $result[0]["PASSWORD"]){
+                if(password_verify($password, $result[0]["PASSWORD"])){
                     return $result[0]["role"];
                 }
                 else{
                     return false;
                 }
             }
-            catch(PDOException $e)
+        catch(PDOException $e)
             {
                 return false;
             }
+    }
+        public function validateRegister($username, $password){
+            try 
+                {   
+                    $con = new PDO('mysql:host=localhost;dbname=tintuc', 'root', '12345');
+                    $query = 'INSERT INTO users(username, PASSWORD, role) VALUES(:username, :password, 0)';
+                    $stmt = $con->prepare($query);
+                    $stmt->bindParam(":username", $username);
+                    $stmt->bindParam(":password", $password);
+                    $stmt->execute();
+
+                    return true;
+                }
+            catch(PDOException $e)
+                {
+                    return false;
+                }
     }
 }
 ?>
