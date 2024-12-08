@@ -31,28 +31,51 @@ require_once("services/NewsServices.php");
             </div>
         </div>
     </header>
-    <div class="d-flex justify-content-center container">
-        <div class="row justify-content-center"> <!-- Mở một hàng -->
+    <div class="d-flex flex-row bd-highlight mb-3 justify-content-center container">
+        <div class="p-2 bd-highlight flex-grow-1" style="flex: 0 0 10%;">
+            <h5 class="my-3">Thể loại</h5>
+            <p>Thể loại 1</p>
+            <p>Thể loại 2</p>
+            <p>Thể loại 3</p>
+            <a href="views/category/list_categories.php">Xem thêm</a>
+        <!-- <table class="table table-info table-bordered text-center">
+            <thead class="thead-light">
+                <tr>
+                    <th>Thể loại</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>abc</td>
+                </tr>
+            </tbody>
+        </table> -->
 
-            <?php
-            for ($i = 0; $i < 6; $i++) {
-            ?>
-                <div class="col-md-3 my-3 mx-4"> <!-- Mỗi thẻ card chiếm 6 cột (50%) trên màn hình trung bình -->
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        <div class="p-2 bd-highlight d-flex justify-content-center container">
+            <div class="row justify-content-center"> <!-- Mở một hàng -->
+
+                <?php
+                for ($i = 0; $i < 6; $i++) {
+                ?>
+                    <div class="col-md-3 my-3 mx-4"> <!-- Mỗi thẻ card chiếm 6 cột (50%) trên màn hình trung bình -->
+                        <div class="card" style="width: 18rem;">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php
-            }
-            ?>
+                <?php
+                }
+                ?>
 
-        </div> <!-- Đóng hàng -->
+            </div> <!-- Đóng hàng -->
+        </div>    
     </div>
+    
 
     <!-- Footer -->
     <footer class="bg-secondary text-white text-center py-3 mt-5">
