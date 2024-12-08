@@ -7,49 +7,55 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container w-50">
-        <form action="" method="POST">
-            <h2 class="text-primary text-center">Đăng nhập</h2>
-                <input type="hidden" name="action" value="login">
-                <label for="username" name="username" id="username">Tên đăng nhập: </label>
-                <input class="form-control" type="text" name="username" id="username">
-                <hr>
-                <label for="password" name="password" id="password">Mật khẩu: </label>
-                <input class="form-control" type="password" name="password" id="password">
-                <hr>
-            </div>
-            <div class="d-flex flex-column align-items-center">
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+<body class="bg-light">
+    <div class="container bg-info w-50 rounded my-3">
+        <div class="container my-3">
+            <form action="" method="POST">
+                <h2 class="text-primary text-center">Đăng nhập</h2>
+                    <input type="hidden" name="action" value="login">
+                    <label for="username" name="username" id="username">Tên đăng nhập: </label>
+                    <input class="form-control" type="text" name="username" id="username">
+                    <hr>
+                    <label for="password" name="password" id="password">Mật khẩu: </label>
+                    <input class="form-control" type="password" name="password" id="password">
+                    <hr>
                 </div>
-                <hr>
-                <div class="mb-3">
-                    <a href="">Quên mật khẩu?</a>
+                <div class="d-flex flex-column bd-highlight mb-3 align-items-center">
+                    <div class="">
+                        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <a href="">Quên mật khẩu?</a>
+                    </div>
+                    <div>
+                        <p class=""><strong>Bạn chưa có tài khoản?</strong></p>
+                        
+                    </div>
+                    <div>
+                        <a href="register.php">Đăng kí</a>
+                    </div>
                 </div>
-                <div>
-                    <p class="me-3"><strong>Bạn chưa có tài khoản?</strong></p>
-                    <a href="register.php">Đăng kí</a>
-                </div>
-            </div>
 
-        </form>
-        <?php
-        require_once '../controllers/AuthController.php';
+            </form>
+            <?php
+            require_once '../controllers/AuthController.php';
 
-        // Kiểm tra nếu có dữ liệu từ form
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            // Lấy dữ liệu từ form
-            $username = $_POST["username"];
-            $password = $_POST["password"];
+            // Kiểm tra nếu có dữ liệu từ form
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                // Lấy dữ liệu từ form
+                $username = $_POST["username"];
+                $password = $_POST["password"];
 
-            // Gọi AuthController để xử lý
-            $authController = new AuthController();
-            $authController->login($username, $password);
-        }
-        ?>
+                // Gọi AuthController để xử lý
+                $authController = new AuthController();
+                $authController->login($username, $password);
+            }
+            ?>
 
+        </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

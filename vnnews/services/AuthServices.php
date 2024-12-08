@@ -20,11 +20,14 @@
                     return false;
                 }
             }
-        catch(PDOException $e)
-            {
-                return false;
+            catch(PDOException $e)
+                {
+                    return false;
+                }
+            finally{
+                $conn = null;
             }
-    }
+        }
         public function validateRegister($username, $password){
             try 
                 {   
@@ -41,6 +44,27 @@
                 {
                     return false;
                 }
-    }
+            finally{
+                $conn = null;
+            }
+        }
+        public function validateUsername($username){
+            try{
+                $con = new PDO('mysql:host=localhost;dbname=tintuc', 'root', '12345');
+                $query = 'SELECT COUNT(*) FROM users WHERE username = :username';
+                $stmt = $con->prepare($query);
+                $stmt->bindParam(':username', $username);
+                $stmt->execute();
+                $result = $stmt->fetchColumn();
+                return $result > 0;
+            }
+            catch(PDOException $e)
+            {
+                return false;
+            }
+            finally{
+                $conn = null;
+            }
+        }
 }
 ?>

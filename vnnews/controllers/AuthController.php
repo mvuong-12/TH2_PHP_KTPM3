@@ -41,15 +41,24 @@ class AuthController {
     }
 
     public function register($username, $password) {
+        $user = $this->authService->validateUsername($username);
+        //die(json_encode($user));
+        if (!($user === true)) {
         //session_start();
-        $register = $this->authService->validateRegister($username, $password);
+            $register = $this->authService->validateRegister($username, $password);
 
-        if($register === true){
-            //$_SESSION["user"] = false;
-            header("Location: ../views/login.php");
-            exit;
+            if($register === true){
+                //$_SESSION["user"] = false;
+                header("Location: ../views/login.php");
+                exit;
+            }
         }
-        // Implement register logic
+        else{
+            die('<div class="alert alert-warning text-center" role="alert">
+                    Tên đăng nhập đã tồn tại!
+                </div>');
+        }
+        
     }
 }
 ?>

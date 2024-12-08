@@ -1,6 +1,7 @@
 <?php
 //Routing: Nhận vào request và phân tích request
 session_start();
+require_once("services/NewsServices.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,27 +13,51 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center text-success my-3">Việt Nam News</h1>
-        <a href="views/login.php" class="btn btn-light mb-3">Đăng nhập</a>
-        
-        <?php
-        for ($i = 0; $i < 3; $i++) {
-        ?>
-            <div class="card mb-3">
-                <div class="card-header">
-                    Featured <?= $i+1?>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Tiêu đề</h5>
-                    <p class="card-text">Tóm tắt nội dung</p>
-                    <a href="#" class="btn btn-primary">Xem chi tiết</a>
-                </div>
+    <!-- Header -->
+    <header class="bg-light text-white py-3">
+        <div class="container">
+            <h1 class="text-center text-success my-3">Việt Nam News</h1>
+            <hr>
+            <div class="d-flex bd-highlight mb-3">
+                <a href="views/login.php" class="btn btn-success mb-3 me-auto">Đăng nhập<i class="bi bi-person-circle mx-2"></i></a>
+                <form action="" method="post" class="d-flex align-items-center" style="width: 500px;">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm tin tức" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <a href="#" class="input-group-text" id="basic-addon2"><i class="bi bi-search"></i></a>
+                            </div>
+                        </div>
+                </form>
             </div>
-        <?php
-        }
-        ?>
+        </div>
+    </header>
+    <div class="d-flex justify-content-center container">
+        <div class="row justify-content-center"> <!-- Mở một hàng -->
+
+            <?php
+            for ($i = 0; $i < 6; $i++) {
+            ?>
+                <div class="col-md-3 my-3 mx-4"> <!-- Mỗi thẻ card chiếm 6 cột (50%) trên màn hình trung bình -->
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
+
+        </div> <!-- Đóng hàng -->
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white text-center py-3 mt-5">
+        <p>&copy; 2024 Việt Nam News. All Rights Reserved.</p>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
