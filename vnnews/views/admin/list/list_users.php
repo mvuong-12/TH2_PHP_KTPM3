@@ -37,18 +37,11 @@ $users = $userService->getAllUsers(); // Lấy tất cả người dùng từ c�
                     <td>
                         <?= $user->getRole() == 1 ? 'Quản trị viên' : 'Người dùng'; ?>
                     </td>
-                    <td>
-                        <a href="edit.php?id=<?= $user->getId(); ?>" class="btn btn-warning btn-sm">Sửa</a>
-                        <a href="delete.php?id=<?= $user->getId(); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');">Xóa</a>
-                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
     <?php endif; ?>
-    <div class="mt-3">
-        <a href="add.php" class="btn btn-success">Thêm người dùng mới</a>
-    </div>
 </div>
 </body>
 </html>
