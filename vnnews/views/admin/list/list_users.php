@@ -1,6 +1,5 @@
 <?php
-// Kết nối cơ sở dữ liệu
-require_once $_SERVER['DOCUMENT_ROOT'] . '/tlunews/TH2_PHP_KTPM3/vnnews/services/UserService.php';
+require_once '../../../services/UserServices.php';
 
 $userService = new UserService();
 $users = $userService->getAllUsers(); // Lấy tất cả người dùng từ cơ sở dữ liệu
@@ -17,31 +16,35 @@ $users = $userService->getAllUsers(); // Lấy tất cả người dùng từ c�
 <body>
 <div class="container mt-5">
     <h1 class="text-center">Danh sách người dùng</h1>
+
     <?php if (empty($users)): ?>
-        <div class="alert alert-warning">Chưa có người dùng nào.</div>
+        <div class="alert alert-warning text-center mt-4">Hiện chưa có người dùng nào.</div>
     <?php else: ?>
-        <table class="table table-bordered mt-4">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Tên đăng nhập</th>
-                <th>Vai trò</th>
-                <th>Hành động</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($users as $user): ?>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered mt-4">
+                <thead class="table-primary text-center">
                 <tr>
-                    <td><?= htmlspecialchars($user->getId()); ?></td>
-                    <td><?= htmlspecialchars($user->getUsername()); ?></td>
-                    <td>
-                        <?= $user->getRole() == 1 ? 'Quản trị viên' : 'Người dùng'; ?>
-                    </td>
+                    <th>#</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Vai trò</th>
                 </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach ($users as $index => $user): ?>
+                    <tr>
+                        <td class="text-center"><?= $index + 1; ?></td>
+                        <td><?= htmlspecialchars($user->getUsername()); ?></td>
+                        <td class="text-center">
+                            <?= $user->getRole() == 1 ? 'Quản trị viên' : 'Người dùng'; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     <?php endif; ?>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

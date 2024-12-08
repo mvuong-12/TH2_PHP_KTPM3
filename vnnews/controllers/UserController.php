@@ -1,5 +1,5 @@
 <?php
-require_once 'services/UserService.php';
+require_once '../services/UserServices.php';
 class UserController{
     private $userServices;
 
@@ -8,11 +8,11 @@ class UserController{
     }
     public function index(){
         $users = $this->userServices->getAllUsers();
-        require 'views/user/index.php';
+        require '../views/user/index.php';
     }
     public function create(){
         //hiển thị form thêm
-        require 'views/user/index.php';
+        require '../views/user/index.php';
     }
     public function store(){
         //lưu dữ liệu form thêm
@@ -22,7 +22,7 @@ class UserController{
             $role = $_POST['role'];
 
             $this->userServices->addUser($username, $password, $role);
-            header('Location: index.php');
+            header('Location: views/user/index.php');
             exit();
         }
     }
@@ -33,7 +33,7 @@ class UserController{
         if ($id) {
             $user = $this->userServices->getUserById($id);
             if ($user) {
-                require 'views/user/index.php';
+                require '../views/user/index.php';
             } else {
                 echo "Người dùng không tồn tại.";
             }

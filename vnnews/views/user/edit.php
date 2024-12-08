@@ -1,24 +1,26 @@
 <?php
 session_start();
-require_once $_SERVER['DOCUMENT_ROOT'] . '/tlunews/TH2_PHP_KTPM3/vnnews/services/UserService.php';
+require_once '../../services/UserServices.php';
 
 // Kiểm tra nếu người dùng chưa đăng nhập
 if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
+    header("Location: ../views/login.php");
     exit;
 }
 
 $userService = new UserService();
 $user = $_SESSION['user']; // Lấy người dùng từ session
 
-// Xử lý sửa thông tin
+// Xử lý chỉnh sửa thông tin người dùng
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $role = $_POST['role'];
 
+    // Cập nhật thông tin
     $userService->updateUser($user->getId(), $username, $role);
-    $_SESSION['user'] = $userService->getUserById($user->getId()); // Cập nhật thông tin người dùng trong session
 
+    // Cập nhật session với thông tin mới
+    $_SESSION['user'] = $userService->getUserById($user->getId());
     header("Location: detail.php");
     exit;
 }
@@ -38,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="POST" class="mt-4">
         <div class="mb-3">
             <label for="username" class="form-label">Tên đăng nhập</label>
-            <input type="text" class="form-control" id="username" name="username" value="<?= htmlspecialchars($user->getUsername()); ?>" required>
+            <input type="text" class="form-control" id="username" name="username"
+                   value="<?= htmlspecialchars($user->getUsername()); ?>" required>
         </div>
         <div class="mb-3">
             <label for="role" class="form-label">Vai trò</label>
@@ -50,5 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
     </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

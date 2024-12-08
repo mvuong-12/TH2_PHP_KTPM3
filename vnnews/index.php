@@ -1,8 +1,5 @@
 <?php
-require_once '../config/config.php';
-echo "<pre>";
-echo APP_ROOT.'';
-echo "</pre>";
+require_once 'config/config.php';
 //Routing: Nhận vào request và phân tích request
 session_start();
 ?>
@@ -30,6 +27,8 @@ session_start();
                 <div class="card-body">
                     <h5 class="card-title">Tiêu đề</h5>
                     <p class="card-text">Tóm tắt nội dung</p>
+                    <p class="card-text">Hình ảnh</p>
+                    <p class="card-text">Ngày tạo</p>
                     <a href="#" class="btn btn-primary">Xem chi tiết</a>
                 </div>
             </div>
@@ -37,6 +36,6 @@ session_start();
         }
         ?>
     </div>
-<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

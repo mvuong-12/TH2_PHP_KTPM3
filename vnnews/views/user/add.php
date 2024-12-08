@@ -1,6 +1,6 @@
 <?php
 // Kết nối cơ sở dữ liệu
-require_once $_SERVER['DOCUMENT_ROOT'] . '/tlunews/TH2_PHP_KTPM3/vnnews/services/UserService.php';
+require_once '../../services/UserServices.php';
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $newUser = $userService->register($username, $password);
 
             if ($newUser) {
-                header("Location: login.php?success=" . urlencode("Đăng ký thành công!"));
+                header("Location: views/login.php?success=" . urlencode("Đăng ký thành công!"));
                 exit;
             } else {
                 $error = "Đã có lỗi xảy ra. Vui lòng thử lại.";
@@ -61,8 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="btn btn-primary">Đăng ký</button>
     </form>
     <div class="mt-3">
-        <a href="login.php">Đã có tài khoản? Đăng nhập</a>
+        <a href="../../views/login.php">Đã có tài khoản? Đăng nhập</a>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
