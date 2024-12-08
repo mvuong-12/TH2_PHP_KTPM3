@@ -1,8 +1,12 @@
 <?php
-require_once '../../../services/UserServices.php';
+// Kết nối đến cơ sở dữ liệu
+require_once '../../../config/config.php';
 
-$userService = new UserService();
-$users = $userService->getAllUsers(); // Lấy tất cả người dùng từ cơ sở dữ liệu
+// Truy vấn danh sách người dùng từ cơ sở dữ liệu
+$query = "SELECT * FROM users"; // Giả sử bảng 'users' chứa thông tin người dùng
+$stmt = $connection->prepare($query);
+$stmt->execute();
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -11,40 +15,34 @@ $users = $userService->getAllUsers(); // Lấy tất cả người dùng từ c�
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh sách người dùng</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="text-center">Danh sách người dùng</h1>
+<div class="container">
+    <h1 class="text-center my-4">Danh sách người dùng</h1>
+    <a href="../../../views/user/add.php" class="btn btn-success mb-3">Thêm người dùng</a>
 
-    <?php if (empty($users)): ?>
-        <div class="alert alert-warning text-center mt-4">Hiện chưa có người dùng nào.</div>
-    <?php else: ?>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered mt-4">
-                <thead class="table-primary text-center">
-                <tr>
-                    <th>#</th>
-                    <th>Tên đăng nhập</th>
-                    <th>Vai trò</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($users as $index => $user): ?>
-                    <tr>
-                        <td class="text-center"><?= $index + 1; ?></td>
-                        <td><?= htmlspecialchars($user->getUsername()); ?></td>
-                        <td class="text-center">
-                            <?= $user->getRole() == 1 ? 'Quản trị viên' : 'Người dùng'; ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    <?php endif; ?>
+    <!-- Bảng danh sách người dùng -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Tên người dùng</th>
+            <th>Mật khẩu</th>
+            <th>Vai trò</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($users as $user): ?>
+            <tr>
+                <td><?= $user['username'] ?></td>
+                <td><?= $user['password'] ?></td>
+                <td><?= $user['role'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

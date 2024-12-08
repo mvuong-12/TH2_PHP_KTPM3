@@ -5,8 +5,8 @@ $dbname = 'tintuc';         // Tên cơ sở dữ liệu
 $username = 'root';         // Tên người dùng MySQL
 $password = '';             // Mật khẩu MySQL (để trống nếu không có)
 
-// Tạo kết nối với cơ sở dữ liệu
 try {
+    // Kết nối đến cơ sở dữ liệu và lưu trong biến $connection
     $connection = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     // Thiết lập chế độ lỗi cho PDO
     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

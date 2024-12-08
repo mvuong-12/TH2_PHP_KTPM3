@@ -1,32 +1,25 @@
 <?php
 // Kết nối cơ sở dữ liệu
-require_once '../../services/UserServices.php';
+require_once '../../config/config.php';
 
-$error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Nhận thông tin từ biểu mẫu
     $username = $_POST['username'];
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirm_password'];
+    $role = $_POST['role'];  // Vai trò của người dùng (0 hoặc 1)
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Mã hóa mật khẩu
 
-    if ($password !== $confirmPassword) {
-        $error = "Mật khẩu xác nhận không khớp.";
-    } else {
-        $userService = new UserService();
+    try {
+        // Thêm người dùng vào cơ sở dữ liệu
+        $query = "INSERT INTO users (username, password, role) VALUES (:username, :password, :role)";
+        $stmt = $connection->prepare($query);
+        $stmt->execute(['username' => $username, 'password' => $password, 'role' => $role]);
 
-        // Kiểm tra nếu người dùng đã tồn tại
-        if ($userService->isUsernameExist($username)) {
-            $error = "Tên đăng nhập đã tồn tại.";
-        } else {
-            // Đăng ký người dùng mới
-            $newUser = $userService->register($username, $password);
-
-            if ($newUser) {
-                header("Location: views/login.php?success=" . urlencode("Đăng ký thành công!"));
-                exit;
-            } else {
-                $error = "Đã có lỗi xảy ra. Vui lòng thử lại.";
-            }
-        }
+        // Chuyển hướng về danh sách người dùng sau khi thêm thành công
+        header("Location: ../admin/list/list_users.php");
+        exit;
+    } catch (PDOException $e) {
+        // Hiển thị thông báo lỗi nếu có
+        echo "Lỗi: " . $e->getMessage();
     }
 }
 ?>
@@ -36,18 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Thêm người dùng</title>
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <h1 class="text-center mt-5">Đăng ký tài khoản</h1>
-    <?php if (!empty($error)): ?>
-        <div class="alert alert-danger"><?= htmlspecialchars($error); ?></div>
-    <?php endif; ?>
-    <form method="POST" action="add.php" class="mt-4">
+    <h1 class="text-center my-4">Thêm người dùng mới</h1>
+
+    <form method="POST">
         <div class="mb-3">
-            <label for="username" class="form-label">Tên đăng nhập</label>
+            <label for="username" class="form-label">Tên người dùng</label>
             <input type="text" class="form-control" id="username" name="username" required>
         </div>
         <div class="mb-3">
@@ -55,15 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
         <div class="mb-3">
-            <label for="confirm_password" class="form-label">Xác nhận mật khẩu</label>
-            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            <label for="role" class="form-label">Vai trò</label>
+            <select class="form-control" id="role" name="role" required>
+                <option value="1">Quản trị viên</option>
+                <option value="0">Người dùng</option>
+            </select>
         </div>
-        <button type="submit" class="btn btn-primary">Đăng ký</button>
+        <button type="submit" class="btn btn-primary">Thêm người dùng</button>
     </form>
-    <div class="mt-3">
-        <a href="../../views/login.php">Đã có tài khoản? Đăng nhập</a>
-    </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
