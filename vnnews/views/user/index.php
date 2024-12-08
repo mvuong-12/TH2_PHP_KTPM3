@@ -6,6 +6,11 @@ if (($_SESSION["user"] != true))
     header("Location: views/login.php");
     exit();
 }
+require_once 'controllers/NewsController.php';
+
+//die(json_encode($news));
+$newCtrl = new NewsController();
+$result = $newCtrl->index();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,20 +80,19 @@ if (($_SESSION["user"] != true))
             </tbody>
         </table> -->
 
-        </div>
         <div class="p-2 bd-highlight d-flex justify-content-center container">
             <div class="row justify-content-center"> <!-- Mở một hàng -->
-
+          
                 <?php
-                for ($i = 0; $i < 6; $i++) {
+                foreach ($result as $news) {
                 ?>
                     <div class="col-md-3 my-3 mx-4"> <!-- Mỗi thẻ card chiếm 6 cột (50%) trên màn hình trung bình -->
                         <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
+                        <img src="<?= 'assets/' . $news->getImage(); ?>" class="card-img-top" alt="News Image">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <h5 class="card-title"><?= $news->getTitle(); ?></h5>
+                                <p class="card-text"><?= substr($news->getContent(), 0, 100); ?>...</p>
+                                <a href="#" class="btn btn-primary">Chi tiết</a>
                             </div>
                         </div>
                     </div>
@@ -97,7 +101,7 @@ if (($_SESSION["user"] != true))
                 ?>
 
             </div> <!-- Đóng hàng -->
-        </div>    
+        </div>      
     </div>
 
     <!-- Footer -->
